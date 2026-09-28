@@ -5,12 +5,16 @@ nav_order: 2
 
 # Aitta
 
-Aitta is an inference platform: a service that runs LLMs% on its own GPUs and lets you use them over the internet, so you don't have to book GPUs and serve an LLM yourself with tools such as vLLM. It is developed by the LUMI AI Factory at CSC, which also hosts LUMI, and runs open-weight LLMs% directly on LUMI-G% nodes. These LLMs serve as the "brain" for your coding agent%.
+Aitta is an inference platform: a service that runs LLMs% on its own GPUs% and lets you use them over the internet, so you don't have to book GPUs and serve an LLM yourself with tools such as vLLM. It is developed by the LUMI AI Factory at CSC, which also hosts LUMI, and runs open-weight LLMs% directly on LUMI-G% nodes. These LLMs serve as the "brain" for your coding agent%.
 
 You can use Aitta in two ways:
 
 - **In your browser**: The [Aitta web frontend](https://aitta.csc.fi) offers a straightforward chat interface where you can log in, pick an LLM, and start prompting immediately without any setup.
 - **Through its API%**: This is how harnesses% and your Python scripts connect to it. The API is OpenAI-compatible, meaning it accepts the same requests as OpenAI's own API. Most tools built for OpenAI will work with Aitta once you point them to Aitta's address and provide your API token%.
+
+Don't expect bare LLMs to know much about Aitta itself, though:
+
+![Aitta web chat: asked "what is aitta?", Poro 2 70B describes a traditional Finnish storage building, a word in Hindi and Marathi and a possible place name, but not the service it is running on](assets/poro-2-what-is-aitta.png)
 
 ## Which LLMs to choose
 

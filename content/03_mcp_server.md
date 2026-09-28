@@ -5,7 +5,7 @@ nav_order: 4
 
 # The LUMI MCP server
 
-An LLM% only knows what it learned during training, and that rarely includes up-to-date details about LUMI. Ask a coding agent% how to use PyTorch on LUMI and it may confidently suggest installing it with `pip install torch`, something that works on a laptop but gives you a PyTorch that cannot use LUMI's AMD GPUs and bloats the system.
+An LLM% only knows what it learned during training, and that rarely includes up-to-date details about LUMI. Ask a coding agent% how to use PyTorch on LUMI and it may confidently suggest installing it with `pip install torch`, something that works on a laptop but gives you a PyTorch that cannot use LUMI's AMD GPUs% and bloats the system.
 
 The LUMI AI Factory runs a public MCP% server that fills this gap. It lets your agent look things up in the LUMI documentation and check LUMI's current status, so it can answer questions about LUMI more accurately and write code suited to the system. It works with any harness% or app that supports MCP, such as OpenCode, Claude Code, Codex or VS Code, whichever LLM it uses. You do not need an account or an API token% to use it.
 
@@ -19,6 +19,8 @@ The server gives your agent two tools:
 |:-----|:-------------|:--------------------------|
 | `retrieve_docs` | Searches a regularly updated knowledge base of the [LUMI documentation](https://docs.lumi-supercomputer.eu/) and the [LUMI AI Guide](https://github.com/Lumi-supercomputer/LUMI-AI-Guide), and returns the most relevant passages with links to their sources | "How do I run PyTorch on LUMI?" |
 | `get_service_status` | Reports LUMI's current status, planned maintenance and ongoing incidents | "Why is my job not starting? Is something down?" |
+
+![OpenCode, asked "how's LUMI doing?", calls lumi-aif_get_service_status and sums up the result: all compute partitions and login nodes are up, and only the LUMI-K web console is in maintenance](assets/opencode-query-MCP.png)
 
 Your agent decides when to use them. If it answers a LUMI question without checking, ask it to, for example "search the LUMI documentation for how to set up a PyTorch environment".
 

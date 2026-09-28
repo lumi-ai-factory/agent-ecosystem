@@ -10,12 +10,13 @@ nav_order: 99
 | Term | Definition |
 |:-----|:-----------|
 | **Open-weight LLM** | A Large Language Model whose trained weights are published, so anyone can download it and run it on their own hardware. |
+| **GPU** | Graphics Processing Unit. A processor first built for graphics that can do a huge number of calculations at once, which is exactly what training and running LLMs needs. LUMI's GPUs are made by AMD. |
 | **Inference platform** | A service that runs LLMs on its own hardware and lets you use them over the internet, through a web chat or an API. |
-| **LLM** | Large Language Model. An AI model trained on huge amounts of text to understand and write language, like the models behind chat assistants. |
+| **LLM** | Large Language Model. An AI model that reads and writes text, such as OpenAI's GPT models behind ChatGPT, Anthropic's Claude or Google's Gemini. Open-weight LLMs such as Llama, Qwen and Gemma are the kind you can use on Aitta. |
 | **API** | Application Programming Interface. A fixed way for programs to talk to each other, for example for a harness to send a prompt to an LLM and get the answer back. |
 | **Coding agent** | An LLM paired with a harness, so that it can work on your code with you: it reads files, writes and edits code and can run commands. The LLM decides each step and the harness carries it out. |
 | **Harness** | The program side of an agent, such as OpenCode or Claude Code. It sends your requests to the LLM, recognises when the LLM asks for a tool, runs it and passes the result back. The LLM decides, the harness acts. |
-| **Open source** | Software whose source code is public, so anyone can read, change and share it. That is why we like it for harnesses: anyone can check exactly what the harness does with your files, and it does not tie you to one company's products. |
+| **Open source** | Software whose source code is public, so anyone can read, change and share it. That is why we like it for harnesses: anyone can check exactly what the harness does with your files and data. |
 | **MCP** | Model Context Protocol. An open standard that lets AI agents connect to outside tools and data in the same way, whichever harness or tool is involved. |
 
 ## Aitta

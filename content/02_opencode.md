@@ -13,15 +13,31 @@ It is one of many harnesses, and the one the LUMI AI Factory provides ready to u
 
 An agent has two parts: the LLM%, which decides what to do, and the harness, which carries it out. You may hear people call the harness itself an agent, but on this site "agent" always means the two together. The harness sends the LLM your request along with a description of the tools it can use, such as reading files, editing code or running commands.
 
-The LLM itself can only write text. To use a tool, it writes text in a fixed format that it was trained to use for tool calls. The exact format differs between LLMs; with many Qwen models, a request to list your Slurm jobs looks something like this:
+The LLM itself can only write text. To use a tool, it writes text in a fixed format that it was trained to use for tool calls. The exact format differs between LLMs; with many Qwen models, a request to list the files in your directory looks something like this:
 
 ```
 <tool_call>
-{"name": "bash", "arguments": {"command": "squeue --me"}}
+{"name": "bash", "arguments": {"command": "ls -la"}}
 </tool_call>
 ```
 
 The harness recognises this as a tool call, checks that it is valid and that your permissions allow it, runs the tool and passes the result back to the LLM, which carries on from there. This is what tool calling means, and why a harness needs an LLM that was trained to do it reliably.
+
+```mermaid
+sequenceDiagram
+    participant You
+    participant H as Harness
+    participant L as LLM
+    You->>H: "What's in this directory?"
+    H->>L: Your request and the tools it can use
+    loop Until the LLM has what it needs
+        L->>H: Tool call: bash, ls -la, etc.
+        Note over H: Checks your permissions<br/>and runs the command
+        H->>L: The command's output
+    end
+    L->>H: Response
+    H->>You: "There are three Python scripts and a data folder..."
+```
 
 ## Why OpenCode
 
@@ -59,6 +75,8 @@ The container already connects OpenCode to Aitta and the LUMI MCP server, so all
 2. Paste your API token from [Aitta](/01_aitta).
 3. Select the desired LLM from the list that appeared or type `/models`.
 
+![OpenCode's model picker, filtered by "aitta", listing LLMs available on Aitta such as Qwen3.6-27B and MiniMax-M2.7](assets/opencode-aitta-models.png)
+
 OpenCode saves the API token in your home directory, which only you can see, so you only need to add it again (`/connect`) when it expires after 90 days.
 
 Compared with a plain install of OpenCode, the container:
@@ -67,6 +85,8 @@ Compared with a plain install of OpenCode, the container:
 - **Knows a little about LUMI.** It gives the agent [a short set of instructions](https://github.com/lumi-ai-factory/laifs-agent-env/blob/main/config/AGENTS.md) about working on LUMI, such as what login nodes are for and how to go easy on LUMI's shared file system.
 - **Only sees your current directory.** The agent can reach the working directory% you start it in and everything below it, but not the rest of your home directory or your other project directories.
 - **Cannot use Slurm.** Slurm commands are not available inside the container, so the agent cannot submit or monitor jobs. It can still write a job script for you to check and submit yourself.
+
+![OpenCode in the LUMI container asking permission before running the shell command ls -la, with the choices Allow once, Allow always and Reject](assets/opencode-bash-ls.png)
 
 If an Aitta LLM you want is missing from the list, you can add it by dropping your own `opencode.json` in `~/.config/opencode/`, like the one [for your own machine](#opencode-on-your-own-machine) below.
 
