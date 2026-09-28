@@ -175,7 +175,7 @@ What the file does:
 - **`permission`** decides what the agent may do without asking you first (see below).
 - **`mcp`** connects the [LUMI MCP server](/03_mcp_server), so the agent can look things up in the LUMI documentation and check LUMI's status.
 - **`provider`** adds Aitta as a source of LLMs: its address and the LLMs you can pick from.
-- **`models`** lists every LLM on Aitta that supports tool calling (as of September 2026). Aitta's selection changes over time, so you may need to add or remove entries. The [previous chapter](/01_aitta#three-steps-to-connect) shows how to list the models currently available on Aitta.
+- **`models`** lists every LLM on Aitta that supports tool calling (as of September 2026). Aitta's selection changes over time, so you may need to add or remove entries. The [previous chapter](/01_aitta#getting-started) shows how to list the models currently available on Aitta.
 
 Then go to your project directory, run `opencode` and add your API token:
 
