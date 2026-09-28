@@ -9,7 +9,7 @@ An LLM% only knows what it learned during training, and that rarely includes up-
 
 The LUMI AI Factory runs a public MCP% server that fills this gap. It lets your agent look things up in the LUMI documentation and check LUMI's current status, so it can answer questions about LUMI more accurately and write code suited to the system. It works with any harness% or app that supports MCP, such as OpenCode, Claude Code, Codex or VS Code, whichever LLM it uses. You do not need an account or an API token% to use it.
 
-But what is this MCP? MCP, the Model Context Protocol, is a shared standard for adding tools to an agent. An MCP server describes the tools it offers, the harness passes those descriptions on to the LLM, and from then on the LLM can call them just like the harness's built-in tools (the [OpenCode page](/02_opencode#how-an-agent-works) explains how tool calling works). Every MCP-capable harness speaks the same protocol, so one server works with all of them.
+But what is this MCP? MCP, the Model Context Protocol, is a shared standard for adding tools to an agent. An MCP server describes the tools it offers, the harness passes those descriptions on to the LLM, and from then on the LLM can call them just like the harness's built-in tools (explained in the [previous chapter](/02_opencode#how-an-agent-works)). Every MCP-capable harness speaks the same protocol, so one server works with all of them.
 
 ## What it can do
 
@@ -30,7 +30,7 @@ You can look at exactly what the tools hand back to the agent.
 
 `get_service_status` passes on the LUMI status API unchanged, so you can open the same data in your browser:
 
-- [Current status](https://status.lumi.csc.fi/api/status), including node availability and response times
+- [Current status](https://status.lumi.csc.fi/api/status), including node% availability and response times
 - [Planned maintenance](https://status.lumi.csc.fi/api/maintenance)
 - [Incidents](https://status.lumi.csc.fi/api/incidents)
 
@@ -51,7 +51,7 @@ Each passage comes back with a link to its source and a score showing how closel
 
 ### OpenCode
 
-On LUMI, the OpenCode container is already connected to the MCP server, so there is nothing to do. On your own machine, the `opencode.json` on the [OpenCode page](/02_opencode#opencode-on-your-own-machine) already includes it.
+On LUMI, the OpenCode container is already connected to the MCP server, so there is nothing to do. On your own machine, the `opencode.json` from the [previous chapter](/02_opencode#opencode-on-your-own-machine) already includes it.
 
 ### Claude Code
 

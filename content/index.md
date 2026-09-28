@@ -25,7 +25,7 @@ They work well together, but each one also works on its own, so you can pick onl
 
 ### Aitta: the models
 
-Aitta is an inference platform%, like the ones OpenAI and Anthropic run, except that its models are open-weight LLMs running on LUMI's GPU nodes. You can chat with them in your browser or connect to them through an API%, and your prompts are processed on LUMI's own hardware instead of being sent to a commercial provider. The API is OpenAI-compatible, so most harnesses and tools built to work with OpenAI can use Aitta too.
+Aitta is an inference platform%, like the ones OpenAI and Anthropic run, except that its models are open-weight LLMs running on LUMI's GPU nodes%. You can chat with them in your browser or connect to them through an API%, and your prompts are processed on LUMI's own hardware instead of being sent to a commercial provider. The API is OpenAI-compatible, so most harnesses and tools built to work with OpenAI can use Aitta too.
 
 ### OpenCode: the harness
 
@@ -41,4 +41,4 @@ An LLM only knows what it learned during training, and that rarely includes up-t
 - **Just want it running?** Get an API token from [Aitta](/01_aitta), then:
   - **On LUMI**, [start the OpenCode container](/02_opencode#opencode-on-lumi). It is already connected to Aitta and the MCP server, so you only add your API token and pick an LLM.
   - **On your own machine**, install OpenCode and download the ready-made [`opencode.json`](/02_opencode#opencode-on-your-own-machine), which connects Aitta and the MCP server.
-  - **With another harness**, connect it to Aitta as the [Aitta page](/01_aitta) describes and add the [MCP server](/03_mcp_server).
+  - **With another harness**, give it Aitta's base address and your API token (see [Getting started](/01_aitta#getting-started)), then add the [MCP server](/03_mcp_server).

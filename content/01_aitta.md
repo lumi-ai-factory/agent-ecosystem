@@ -5,22 +5,22 @@ nav_order: 2
 
 # Aitta
 
-Aitta is an inference platform: a service that runs LLMs% on its own GPUs% and lets you use them over the internet, so you don't have to book GPUs and serve an LLM yourself with tools such as vLLM. It is developed by the LUMI AI Factory at CSC, which also hosts LUMI, and runs open-weight LLMs% directly on LUMI-G% nodes. These LLMs serve as the "brain" for your coding agent%.
+Aitta is an inference platform: a service that runs LLMs% on its own GPUs% and lets you use them over the internet, so you don't have to book GPUs and serve an LLM yourself with tools such as vLLM. It is developed by the LUMI AI Factory at CSC, which also hosts LUMI, and runs open-weight LLMs% directly on LUMI GPU nodes%. These LLMs serve as the "brain" for your coding agent%.
 
 You can use Aitta in two ways:
 
 - **In your browser**: The [Aitta web frontend](https://aitta.csc.fi) offers a straightforward chat interface where you can log in, pick an LLM, and start prompting immediately without any setup.
-- **Through its API%**: This is how harnesses% and your Python scripts connect to it. The API is OpenAI-compatible, meaning it accepts the same requests as OpenAI's own API. Most tools built for OpenAI will work with Aitta once you point them to Aitta's address and provide your API token%.
+- **Through its API%**: This is how a harness% or your Python scripts connect to it. The API is OpenAI-compatible, meaning it accepts the same requests as OpenAI's own API. Most tools built for OpenAI will work with Aitta once you point them to Aitta's address and provide your API token%.
 
-Don't expect bare LLMs to know much about Aitta itself, though:
+This is what the web chat looks like:
 
 ![Aitta web chat: asked "what is aitta?", Poro 2 70B describes a traditional Finnish storage building, a word in Hindi and Marathi and a possible place name, but not the service it is running on](assets/poro-2-what-is-aitta.png)
 
 ## Which LLMs to choose
 
-Aitta provides a variety of generative LLMs that can read and write text, with some also supporting image inputs. For coding agents, you need an LLM that was trained for tool calling% (the [OpenCode page](/02_opencode#how-an-agent-works) explains what that means).
+Aitta provides a variety of generative LLMs that can read and write text, with some also supporting image inputs. For coding agents, you need an LLM that was trained for tool calling% (explained in more detail on the next page).
 
-To check if a specific LLM is suited for this, you can look it up on [Hugging Face](https://huggingface.co), where Aitta's LLMs always go by the same names, and see whether its model card mentions tool calling capabilities. The [OpenCode page](/02_opencode) also lists the LLMs on Aitta that support tool calling.
+To check if a specific LLM is suited for this, you can look it up on [Hugging Face](https://huggingface.co), where Aitta's LLMs always go by the same names, and see whether its model card mentions tool calling capabilities. The next page on OpenCode also lists the Aitta LLMs that support tool calling.
 
 ## Where your data goes
 
@@ -50,7 +50,7 @@ curl -H "Authorization: Bearer <YOUR_TOKEN>" https://aitta-api.csc.fi/worker
 ### Prerequisites
 
 - You need an active LUMI project.
-- You need a place to run your harness, such as your own laptop or a LUMI login node. (The [OpenCode page](/02_opencode) explains how to set this up).
+- You need a place to run your harness, such as your own laptop or a LUMI login node. The next page explains how to set this up.
 
 ### Three steps to connect
 

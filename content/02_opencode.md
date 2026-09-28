@@ -41,9 +41,9 @@ sequenceDiagram
 
 ## Why OpenCode
 
-OpenCode works much like Anthropic's Claude Code or OpenAI's Codex, but it is not tied to any AI company: it is open source% and works with LLMs from almost any provider. This page connects it to [Aitta](/01_aitta), which keeps your prompts on LUMI, but you can just as well use GPT, Claude or other LLMs through an account with their provider, and switch between them without learning a new tool.
+OpenCode works much like Anthropic's Claude Code or OpenAI's Codex, but it is not tied to any AI company: it is open source% and works with LLMs from almost any provider. This page connects it to Aitta, which keeps your prompts on LUMI, but you can just as well use GPT, Claude or other LLMs through an account with their provider, and switch between them without learning a new tool.
 
-You do not need OpenCode to use the rest of the LUMI agent ecosystem either. Aitta works with most harnesses that support OpenAI-compatible providers, as the [Aitta page](/01_aitta) explains. Claude Code does not: it works only with Anthropic's API% and cannot connect to Aitta directly. It can still use the LUMI MCP% server, as can Codex and most other harnesses (see the [MCP server page](/03_mcp_server)).
+You do not need OpenCode to use the rest of the LUMI agent ecosystem either. Aitta works with most harnesses that support OpenAI-compatible providers, as explained in the [previous chapter](/01_aitta). Claude Code does not: it works only with Anthropic's API% and cannot connect to Aitta directly. It can still use the LUMI MCP% server, as can Codex and most other harnesses, as the next chapter explains.
 
 ## Before you start: what not to do
 
@@ -116,9 +116,12 @@ curl -fsSL https://opencode.ai/install | bash
 
 For Windows and other options, such as npm, Homebrew and Docker, see the [OpenCode installation guide](https://opencode.ai/docs/).
 
-Out of the box, OpenCode uses OpenCode Zen, a model service run by the company that maintains OpenCode, so everything you type and every file the agent reads is sent to that company. To add Aitta and the LUMI MCP server instead, download this configuration and save it as `~/.config/opencode/opencode.json`, or copy it from the box below:
+Out of the box, OpenCode uses OpenCode Zen, a model service run by the company that maintains OpenCode, so everything you type and every file the agent reads is sent to that company. To add Aitta and the LUMI MCP server instead, download this configuration and save it as `~/.config/opencode/opencode.json`, or open the section below to copy it:
 
 [opencode.json](./assets/opencode.json)
+
+<details>
+<summary>Show the contents of opencode.json</summary>
 
 ```json title="~/.config/opencode/opencode.json"
 {
@@ -164,13 +167,15 @@ Out of the box, OpenCode uses OpenCode Zen, a model service run by the company t
 }
 ```
 
+</details>
+
 What the file does:
 
 - **`model`** makes Qwen3.6-27B on Aitta the default LLM.
 - **`permission`** decides what the agent may do without asking you first (see below).
 - **`mcp`** connects the [LUMI MCP server](/03_mcp_server), so the agent can look things up in the LUMI documentation and check LUMI's status.
 - **`provider`** adds Aitta as a source of LLMs: its address and the LLMs you can pick from.
-- **`models`** lists every LLM on Aitta that supports tool calling (as of September 2026). Aitta's selection changes over time, so you may need to add or remove entries. The [Aitta page](/01_aitta) shows how to list the models currently available on Aitta.
+- **`models`** lists every LLM on Aitta that supports tool calling (as of September 2026). Aitta's selection changes over time, so you may need to add or remove entries. The [previous chapter](/01_aitta#three-steps-to-connect) shows how to list the models currently available on Aitta.
 
 Then go to your project directory, run `opencode` and add your API token:
 
