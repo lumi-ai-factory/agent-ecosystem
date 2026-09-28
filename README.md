@@ -24,47 +24,6 @@ The site explains why each piece is useful, gives the configuration you need to 
 | MCP server | `content/03_mcp_server.md` | What MCP is, the two tools, how to see their raw output and how to add it to other harnesses |
 | Glossary | `content/glossary.md` | Short definitions of the technical terms used across the site |
 
-## Editing the site
-
-All content lives in the `content/` folder as Markdown. Commit a change to `main` and GitHub Actions rebuilds and redeploys the site within a minute or two. There is nothing to build locally.
-
-A few things to know before you edit:
-
-- **Page order.** Every page starts with front matter that sets its title and position in the sidebar:
-
-  ```markdown
-  ---
-  title: "Page Title"
-  nav_order: 2
-  ---
-  ```
-
-- **Site title.** The top `#` heading of `content/index.md` becomes the site title.
-- **Glossary terms.** Writing `LLM%` shows the glossary definition when a reader hovers over the term. Mark only the first appearance of a term on each page, never in the sentence that defines it, and add any new term to the table in `content/glossary.md`, otherwise the marker does nothing.
-- **Callouts, quizzes, collapsible sections and Mermaid diagrams** are all available. Examples of each are in the [course template](https://github.com/lumi-ai-factory/course-template).
-- **Style.** Use British spelling and plain language. Link to existing LUMI documentation instead of copying it.
-- **Images and downloads** go in `public/assets/`.
-
-The full writing guide for this repository, including what each page must and must not say, is in [CLAUDE.md](CLAUDE.md).
-
-## Getting template updates
-
-The site is built on the LUMI AI Factory [course template](https://github.com/lumi-ai-factory/course-template). To pull in its latest styling fixes and features without touching our content, register the template once:
-
-```bash
-git remote add template https://github.com/lumi-ai-factory/course-template.git
-```
-
-Then, whenever you want the latest version (commit and push your own work first):
-
-```bash
-git fetch template
-git checkout template/main -- . ":(exclude)content" ":(exclude)public" ":(exclude)README.md"
-git commit -m "Pull in template updates"
-git push
-```
-
-Check `git status` before committing. Any local edits to the template's internals (`src/`, the build config, the deploy workflow) are overwritten and need to be re-applied.
 
 ## Licence
 
