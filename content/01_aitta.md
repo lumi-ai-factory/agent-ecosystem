@@ -54,7 +54,7 @@ curl -H "Authorization: Bearer <YOUR_TOKEN>" https://aitta-api.csc.fi/worker
 2. **Generate an API token** using the "Generate token" link in the interface, or go straight to [aitta-auth.csc.fi/myToken](https://aitta-auth.csc.fi/myToken). The API token stays valid for 90 days, or until your LUMI project ends if that comes first, so you only need to give it to your harness again when it expires.
 3. **Connect your harness** by giving it Aitta's base address, `https://aitta-api.csc.fi/openai/v1`, and your API token.
 
-For a complete walkthrough of the interface and detailed instructions, refer to the official [Aitta step-by-step guide](https://docs.lumi-supercomputer.eu/laif/inference/aitta/).
+For more on the web interface and using the API from Python, see the [Aitta documentation](https://docs.lumi-supercomputer.eu/laif/inference/aitta/).
 
 <details>
 <summary>Optional: using embedding models</summary>
@@ -76,7 +76,7 @@ curl https://aitta-api.csc.fi/openai/v1/embeddings \
   -d '{"model": "intfloat/multilingual-e5-large", "input": ["query: How do I run PyTorch on LUMI?"]}'
 ```
 
-Like LLMs, an embedding model that is not running needs a few minutes to load before it answers (see [Resources and limitations](#resources-and-limitations)).
+Like LLMs, an embedding model that is not running needs a few minutes to load before it answers.
 
 What comes back is the embedding itself: a long list of numbers for each text.
 
