@@ -1,44 +1,61 @@
-# LUMI AI Factory — Branded Learning Template
+# LUMI Agent Ecosystem
 
 ![LUMI AI Factory logo](public/assets/LAIF_logo_dark_white_background.jpg)
 
-This is a template for creating clean, branded self-learning course sites for the **LUMI AI Factory**. The site:
+This repository holds the source of the **LUMI Agent Ecosystem** site, a short guide by the LUMI AI Factory to using AI coding agents on LUMI.
 
-- has the LUMI AI Factory branding and colours;
-- has light and dark mode (auto-follows the visitor's system, with a manual toggle);
-- supports headings, lists, tables, code blocks with syntax highlighting and copy-to-clipboard, math (KaTeX), diagrams (Mermaid), images, embedded videos, and four branded callout types;
-- can be edited just by adding/editing `.md` files in the `content/` folder;
-- turns Jupyter notebooks into pages too: drop your `.ipynb` files into `content/` and they are rendered alongside the Markdown ones;
-- names itself from your content: the top heading of `content/index.md` becomes the site title, so there is no configuration file to edit;
-- can be built and published on [GitHub Pages].
+**Read the site:** https://lumi-ai-factory.github.io/agent-ecosystem/
 
-## Quick start
+## What the site covers
 
-1. Click **[Use this template]** button at the top of this repository to make your own copy (you must be logged in for the button to be there). Name it after your study materials.
-2. In your new repository, go to **Settings → Pages → Build and deployment → Source** and select **GitHub Actions**.
-3. Click the gear icon ⚙ next to **About** on the right side of your repo, tick **Use your GitHub Pages website**, and click **Save**. The live link now appears at the top right of the repo.
-4. Make and commit any change to `content/index.md` and your website will be "built and deployed". In a minute, when the yellow circle next to your name in the repo has changed from a yellow circle to a green tick (refresh the page), you can access your website via the link that appeared in Step 3.
-5. Edit `content/index.md` and add your content. To force refresh the website page (to tell your browser not to use the cached version), press ctrl + F5 on Linux and Windows, or Cmd + Shift + R on Mac. 
+The LUMI AI Factory offers three pieces that work together, and each one also works on its own:
 
-Every time you push a commit to your repository, the website is rebuilt and redeployed automatically (can take a minute).
+- **Aitta**, an inference platform that serves open-weight LLMs on LUMI's GPU nodes through a web chat and an OpenAI-compatible API, so your prompts are processed on LUMI's own hardware.
+- **OpenCode**, an open-source harness (the program half of a coding agent) that comes ready to use on LUMI in a container and can also be installed on your own machine.
+- **The LUMI MCP server**, a public server that lets any MCP-capable harness search the LUMI documentation and check LUMI's service status.
 
-The demo with examples of how to add content and new pages can be found in `content/index.md`.
+The site explains why each piece is useful, gives the configuration you need to get going, and links to the official [LUMI documentation](https://docs.lumi-supercomputer.eu/) for the step-by-step instructions rather than repeating them. It is written for newcomers to AI agents as well as for experienced users who only want the config files and commands.
 
-## Getting template updates into your course
+| Page | Source file | What it is about |
+|:-----|:------------|:-----------------|
+| Introduction | `content/index.md` | Overview of the three pieces and where to start |
+| Aitta | `content/01_aitta.md` | What an inference platform is, the models, data confidentiality, fair use and getting an API token |
+| OpenCode | `content/02_opencode.md` | How an agent and tool calling work, what not to do with one, OpenCode on LUMI and on your own machine, a ready-made `opencode.json` |
+| MCP server | `content/03_mcp_server.md` | What MCP is, the two tools, how to see their raw output and how to add it to other harnesses |
+| Glossary | `content/glossary.md` | Short definitions of the technical terms used across the site |
 
-The template keeps improving (styling fixes, new features), if you'd like to get the latest updates and features, you have 2 ways: do it yourself (if you know how to use the command line) or ask me to do it for you (you can reach out on RC or via email).
+## Editing the site
 
-To do it yourself:
+All content lives in the `content/` folder as Markdown. Commit a change to `main` and GitHub Actions rebuilds and redeploys the site within a minute or two. There is nothing to build locally.
 
-A repository made with **Use this template** does not share git history with this template, so there is no "Sync fork" button — instead you copy the template's internals over with the commands below. Your own work is left alone: everything in `content/`, everything in `public/` (your images, logos, and any files you link to), and your `README.md` are untouched.
+A few things to know before you edit:
 
-You need a local clone of **your** repository (`git clone <your-repo-url>`). Then, one time only, register the template as an extra remote:
+- **Page order.** Every page starts with front matter that sets its title and position in the sidebar:
+
+  ```markdown
+  ---
+  title: "Page Title"
+  nav_order: 2
+  ---
+  ```
+
+- **Site title.** The top `#` heading of `content/index.md` becomes the site title.
+- **Glossary terms.** Writing `LLM%` shows the glossary definition when a reader hovers over the term. Mark only the first appearance of a term on each page, never in the sentence that defines it, and add any new term to the table in `content/glossary.md`, otherwise the marker does nothing.
+- **Callouts, quizzes, collapsible sections and Mermaid diagrams** are all available. Examples of each are in the [course template](https://github.com/lumi-ai-factory/course-template).
+- **Style.** Use British spelling and plain language. Link to existing LUMI documentation instead of copying it.
+- **Images and downloads** go in `public/assets/`.
+
+The full writing guide for this repository, including what each page must and must not say, is in [CLAUDE.md](CLAUDE.md).
+
+## Getting template updates
+
+The site is built on the LUMI AI Factory [course template](https://github.com/lumi-ai-factory/course-template). To pull in its latest styling fixes and features without touching our content, register the template once:
 
 ```bash
 git remote add template https://github.com/lumi-ai-factory/course-template.git
 ```
 
-Whenever you want the latest template version (commit and push your own work first):
+Then, whenever you want the latest version (commit and push your own work first):
 
 ```bash
 git fetch template
@@ -47,13 +64,8 @@ git commit -m "Pull in template updates"
 git push
 ```
 
-After the push, your site rebuilds and redeploys automatically as usual.
+Check `git status` before committing. Any local edits to the template's internals (`src/`, the build config, the deploy workflow) are overwritten and need to be re-applied.
 
-Good to know:
+## Licence
 
-- Review what changed before committing with `git status`.
-- If you edited the template's internals yourself (anything under `src/`, the build config, the deploy workflow), those edits are overwritten by this — re-apply them afterwards.
-- Older copies of the template had a `site.config.ts` in the repository root. The site now names itself from `content/index.md`, so that file no longer does anything and can be deleted.
-
-[GitHub Pages]: https://docs.github.com/en/pages
-[use this template]: https://github.com/Arbruiser/LUMI_AIF_template/generate
+The content and documentation are licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), and the code under the MIT License. See [LICENSE](LICENSE) for details.

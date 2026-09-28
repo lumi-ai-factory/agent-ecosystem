@@ -1,13 +1,15 @@
 ---
 title: "MCP server"
-nav_order: 5
+nav_order: 4
 ---
 
 # The LUMI MCP server
 
 An LLM% only knows what it learned during training, and that rarely includes up-to-date details about LUMI. Ask a coding agent% how to use PyTorch on LUMI and it may confidently suggest installing it with `pip install torch`, something that works on a laptop but gives you a PyTorch that cannot use LUMI's AMD GPUs and bloats the system.
 
-The LUMI AI Factory runs a public MCP% server that fills this gap. It lets your agent look things up in the LUMI documentation and check LUMI's current status, so it can answer questions about LUMI more accurately and write code suited to the system. It works with any agent or app that supports MCP, such as OpenCode, Claude Code, Codex or VS Code, whichever LLM the agent uses. You do not need an account or an API token% to use it.
+The LUMI AI Factory runs a public MCP% server that fills this gap. It lets your agent look things up in the LUMI documentation and check LUMI's current status, so it can answer questions about LUMI more accurately and write code suited to the system. It works with any harness% or app that supports MCP, such as OpenCode, Claude Code, Codex or VS Code, whichever LLM it uses. You do not need an account or an API token% to use it.
+
+But what is this MCP? MCP, the Model Context Protocol, is a shared standard for adding tools to an agent. An MCP server describes the tools it offers, the harness passes those descriptions on to the LLM, and from then on the LLM can call them just like the harness's built-in tools (the [OpenCode page](/02_opencode#how-an-agent-works) explains how tool calling works). Every MCP-capable harness speaks the same protocol, so one server works with all of them.
 
 ## What it can do
 
@@ -30,7 +32,7 @@ You can look at exactly what the tools hand back to the agent.
 - [Planned maintenance](https://status.lumi.csc.fi/api/maintenance)
 - [Incidents](https://status.lumi.csc.fi/api/incidents)
 
-The same information in a human readable form is on the [LUMI status page](https://status.lumi.csc.fi).
+The same information in a human-readable form is on the [LUMI status page](https://status.lumi.csc.fi).
 
 `retrieve_docs` cannot be opened in a browser, but you can call it from your terminal. Change the text after `"query"` to your own search, and `"k"` to the number of passages you want back:
 
@@ -43,11 +45,11 @@ curl -s https://lumi-aif-agents.2.rahtiapp.fi/mcp \
 
 Each passage comes back with a link to its source and a score showing how closely it matches your query.
 
-## Connect your agent
+## Add it to your harness
 
 ### OpenCode
 
-On LUMI, the OpenCode container is already connected to the MCP server, so there is nothing to do. On your own machine, the `opencode.json` on the [OpenCode page](/03_opencode#opencode-on-your-own-machine) already includes it.
+On LUMI, the OpenCode container is already connected to the MCP server, so there is nothing to do. On your own machine, the `opencode.json` on the [OpenCode page](/02_opencode#opencode-on-your-own-machine) already includes it.
 
 ### Claude Code
 
@@ -70,9 +72,9 @@ url = "https://lumi-aif-agents.2.rahtiapp.fi/mcp"
 
 See the [Codex MCP documentation](https://learn.chatgpt.com/docs/extend/mcp?surface=cli) for other options.
 
-### Other agents
+### Other harnesses
 
-Most other agents and apps can connect to a remote MCP server too. Look in their documentation for how to add one, and give it the address `https://lumi-aif-agents.2.rahtiapp.fi/mcp`.
+Most other harnesses and apps, such as VS Code, can connect to a remote MCP server too. Look in their documentation for how to add one, and give it the address `https://lumi-aif-agents.2.rahtiapp.fi/mcp`.
 
 ## Knowledge check
 
@@ -83,7 +85,7 @@ Q: What do you need to use the LUMI MCP server?
 - [ ] An Aitta API token
 - [ ] A LUMI account
 - [x] Nothing, it is public
-> The server is public and needs no account or API token. You only add its address to your agent.
+> The server is public and needs no account or API token. You only add its address to your harness.
 
 ---
 

@@ -1,19 +1,33 @@
 ---
 title: "OpenCode"
-nav_order: 4
+nav_order: 3
 ---
 
 # OpenCode
 
-OpenCode is a coding agent% that runs in your terminal. You describe what you want in plain language, such as "write a Slurm% job script for this training run" or "why does this script crash?", and it reads your files, proposes changes and, if you allow it, edits code and runs commands. An LLM% decides each step, and OpenCode carries it out.
+OpenCode is a harness, the program half of a coding agent%, and it runs in your terminal or code editors such as VS Code. You describe what you want in plain language, such as "write a Slurm% job script for this training run" or "why does this script crash?", and it reads your files, proposes changes and, if you allow it, edits code and runs commands. An LLM% decides each step, and OpenCode carries it out.
 
-It is one of many coding agents, and the one the LUMI AI Factory provides ready to use on LUMI, in a container%. You can also install it on your own machine.
+It is one of many harnesses, and the one the LUMI AI Factory provides ready to use on LUMI, in a container%. You can also install it on your own machine.
+
+## How an agent works
+
+An agent has two parts: the LLM, which decides what to do, and the harness, which carries it out. You may hear people call the harness itself an agent, but on this site "agent" always means the two together. The harness sends the LLM your request along with a description of the tools it can use, such as reading files, editing code or running commands.
+
+The LLM itself can only write text. To use a tool, it writes text in a fixed format that it was trained to use for tool calls. The exact format differs between LLMs; with many Qwen models, a request to list your Slurm jobs looks something like this:
+
+```
+<tool_call>
+{"name": "bash", "arguments": {"command": "squeue --me"}}
+</tool_call>
+```
+
+The harness recognises this as a tool call, checks that it is valid and that your permissions allow it, runs the tool and passes the result back to the LLM, which carries on from there. This is what tool calling means, and why a harness needs an LLM that was trained to do it reliably.
 
 ## Why OpenCode
 
-OpenCode works much like Anthropic's Claude Code or OpenAI's Codex, but it is not tied to any AI company: it is open source% and works with LLMs from almost any provider. This page connects it to [Aitta](/02_aitta), which keeps your prompts on LUMI, but you can just as well use GPT, Claude or other LLMs through an account with their provider, and switch between them without learning a new tool.
+OpenCode works much like Anthropic's Claude Code or OpenAI's Codex, but it is not tied to any AI company: it is open source% and works with LLMs from almost any provider. This page connects it to [Aitta](/01_aitta), which keeps your prompts on LUMI, but you can just as well use GPT, Claude or other LLMs through an account with their provider, and switch between them without learning a new tool.
 
-You do not need OpenCode to use the rest of the LUMI agent ecosystem either. Aitta works with most agents that support OpenAI-compatible providers, as the [Aitta page](/02_aitta) explains. Claude Code is the exception: it works with Anthropic's API% and cannot connect to Aitta directly. It can still use the LUMI MCP% server, as can Codex and most other agents (see the [MCP server page](/04_mcp_server)).
+You do not need OpenCode to use the rest of the LUMI agent ecosystem either. Aitta works with most harnesses that support OpenAI-compatible providers, as the [Aitta page](/01_aitta) explains. Claude Code does not: it works only with Anthropic's API% and cannot connect to Aitta directly. It can still use the LUMI MCP% server, as can Codex and most other harnesses (see the [MCP server page](/03_mcp_server)).
 
 ## Before you start: what not to do
 
@@ -23,12 +37,12 @@ An agent acts on your behalf: every command it runs is executed under your own u
 > - **Stay in charge.** Monitor your agent actively and avoid running more than one.
 > - **Save often.** If a login node becomes unstable, agent processes may be stopped without notice. Save your work frequently and do not rely on long, unsupervised sessions.
 > - **Protect your work.** Agents can change, overwrite or delete files without asking, and LUMI's file systems are not backed up. Use version control or keep backups. Instead of letting the agent run Git commands, ask it which commands to run and run them yourself.
-> - **Keep it contained.** Run the agent in a container to limit which files it can reach, and never run it with elevated privileges (on your own machine, for example with `sudo` or as an administrator).
+> - **Keep it contained.** Run the harness in a container to limit which files the agent can reach, and never run it with elevated privileges (on your own machine, for example with `sudo` or as an administrator).
 > - **Mind the shared system.** Agents may submit jobs, spawn runaway loops or query Slurm over and over, which affects everyone on LUMI. Check any job settings the agent suggests against the LUMI documentation. Disruptive processes may be terminated.
 > - **No sensitive data.** Never process sensitive or confidential data with an agent. Use synthetic data instead.
 > - **Guard your credentials.** Never give access to your password, SSH key or any other credential to an agent running on a third-party system, such as an online chatbot or a cloud-based IDE.
 
-Running an agent on a login node% is allowed. Login nodes are shared by all LUMI users and meant for light tasks: the agent can write and edit code there, but compute-heavy work belongs on compute nodes% through Slurm.
+Running a harness on a login node% is allowed. Login nodes are shared by all LUMI users and meant for light tasks: the agent can write and edit code there, but compute-heavy work belongs on compute nodes% through Slurm.
 
 ## OpenCode on LUMI
 
@@ -39,10 +53,10 @@ module load Local-LAIF lumi-aif-agents
 opencode
 ```
 
-The container already connects OpenCode to Aitta and the LUMI MCP server, so all that is left is to input your API token% and select an LLM:
+The container already connects OpenCode to Aitta and the LUMI MCP server, so all that is left is to add your API token% and pick one of Aitta's LLMs before your first prompt:
 
 1. Type `/connect` and search for `aitta` as the provider.
-2. Paste your API token from [Aitta](/02_aitta).
+2. Paste your API token from [Aitta](/01_aitta).
 3. Select the desired LLM from the list that appeared or type `/models`.
 
 OpenCode saves the API token in your home directory, which only you can see, so you only need to add it again (`/connect`) when it expires after 90 days.
@@ -82,11 +96,14 @@ curl -fsSL https://opencode.ai/install | bash
 
 For Windows and other options, such as npm, Homebrew and Docker, see the [OpenCode installation guide](https://opencode.ai/docs/).
 
-Out of the box, OpenCode uses OpenCode Zen, a model service run by the company that maintains OpenCode, so everything you type and every file the agent reads is sent to that company. To add Aitta and the LUMI MCP server instead, save this configuration as `~/.config/opencode/opencode.json`:
+Out of the box, OpenCode uses OpenCode Zen, a model service run by the company that maintains OpenCode, so everything you type and every file the agent reads is sent to that company. To add Aitta and the LUMI MCP server instead, download this configuration and save it as `~/.config/opencode/opencode.json`, or copy it from the box below:
+
+[opencode.json](./assets/opencode.json)
 
 ```json title="~/.config/opencode/opencode.json"
 {
   "$schema": "https://opencode.ai/config.json",
+  "model": "aitta/Qwen/Qwen3.6-27B",
   "permission": {
     "bash": "ask",
     "edit": "ask",
@@ -129,16 +146,17 @@ Out of the box, OpenCode uses OpenCode Zen, a model service run by the company t
 
 What the file does:
 
+- **`model`** makes Qwen3.6-27B on Aitta the default LLM.
 - **`permission`** decides what the agent may do without asking you first (see below).
-- **`mcp`** connects the [LUMI MCP server](/04_mcp_server), so the agent can look things up in the LUMI documentation and check LUMI's status.
+- **`mcp`** connects the [LUMI MCP server](/03_mcp_server), so the agent can look things up in the LUMI documentation and check LUMI's status.
 - **`provider`** adds Aitta as a source of LLMs: its address and the LLMs you can pick from.
-- **`models`** lists every LLM on Aitta that supports tool calling% (as of September 2026). Aitta's selection changes over time, so you may need to add or remove entries. The [Aitta page](/02_aitta) shows how to list the models currently available on Aitta.
+- **`models`** lists every LLM on Aitta that supports tool calling (as of September 2026). Aitta's selection changes over time, so you may need to add or remove entries. The [Aitta page](/01_aitta) shows how to list the models currently available on Aitta.
 
-Then go to your project directory, run `opencode` and add your API token and an LLM, just as on LUMI:
+Then go to your project directory, run `opencode` and add your API token:
 
 1. Type `/connect` and search for `aitta` as the provider.
-2. Paste your API token from [Aitta](/02_aitta).
-3. Select the desired LLM from the list that appeared or type `/models`.
+2. Paste your API token from [Aitta](/01_aitta).
+3. Start prompting. Qwen3.6-27B should be already selected; type `/models` to pick another LLM.
 
 ### What the agent can do without asking
 
@@ -155,21 +173,21 @@ Reading and searching cannot change anything, so asking every time would mostly 
 
 ### Keeping it contained
 
-On your own machine, the agent is not locked into your project directory. OpenCode asks before it opens files elsewhere, but a command you approve runs as you and can reach all your files, such as your documents or your SSH keys. A container makes sure the agent can only reach the directories you choose, which is why the AI agent guide recommends running agents in a container to control which files they can reach. OpenCode offers an official Docker image for this (see the Docker option in the [OpenCode installation guide](https://opencode.ai/docs/)), and Docker's guide to [bind mounts](https://docs.docker.com/engine/storage/bind-mounts/) shows how to give the container access to just your project directory.
+On your own machine, the agent is not locked into your project directory. OpenCode asks before it opens files elsewhere, but a command you approve runs as you and can reach all your files, such as your documents or your SSH keys. A container makes sure the agent can only reach the directories you choose, which is why the AI agent guide recommends running the harness in a container. OpenCode offers an official Docker image for this (see the Docker option in the [OpenCode installation guide](https://opencode.ai/docs/)), and Docker's guide to [bind mounts](https://docs.docker.com/engine/storage/bind-mounts/) shows how to give the container access to just your project directory.
 
 > [!info] In development: Slurm for agents on your own machine
-> The LUMI AI Factory is developing a FirecREST API for LUMI, which will let an agent on your own machine run Slurm commands on LUMI. You log in, get an access token, and the agent uses it to connect to the API as you.
+> The LUMI AI Factory is developing a FirecREST API for LUMI, which will let a harness on your own machine run Slurm commands on LUMI. You log in, get an access token, and the harness uses it to connect to the API as you.
 
 ## Knowledge check
 
 ```quiz
 title: Check your understanding
 
-Q: You start OpenCode and send a prompt before picking an LLM with /models. Where does it go?
+Q: On LUMI, you start OpenCode and send a prompt before picking an LLM. Where does it go?
 - [ ] To Aitta, on LUMI's own hardware
 - [x] To OpenCode Zen, a service run by the company that maintains OpenCode
 - [ ] Nowhere, OpenCode refuses to answer
-> OpenCode uses OpenCode Zen by default. Your prompts only stay on LUMI once you pick one of Aitta's LLMs.
+> The container does not pick an LLM for you, so OpenCode uses its default, OpenCode Zen.
 
 ---
 
