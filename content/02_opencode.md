@@ -5,13 +5,13 @@ nav_order: 3
 
 # OpenCode
 
-OpenCode is a harness, the program half of a coding agent%, and it runs in your terminal or code editors such as VS Code. You describe what you want in plain language, such as "write a Slurm% job script for this training run" or "why does this script crash?", and it reads your files, proposes changes and, if you allow it, edits code and runs commands. An LLM% decides each step, and OpenCode carries it out.
+OpenCode is a harness, the program half of a coding agent%, and it runs in your terminal or code editors such as VS Code. You describe what you want in plain language, such as "write a Slurm% job script for this training run" or "why does this script crash?", and it reads your files, proposes changes and, if you allow it, edits code and runs commands.
 
 It is one of many harnesses, and the one the LUMI AI Factory provides ready to use on LUMI, in a container%. You can also install it on your own machine.
 
 ## How an agent works
 
-An agent has two parts: the LLM, which decides what to do, and the harness, which carries it out. You may hear people call the harness itself an agent, but on this site "agent" always means the two together. The harness sends the LLM your request along with a description of the tools it can use, such as reading files, editing code or running commands.
+An agent has two parts: the LLM%, which decides what to do, and the harness, which carries it out. You may hear people call the harness itself an agent, but on this site "agent" always means the two together. The harness sends the LLM your request along with a description of the tools it can use, such as reading files, editing code or running commands.
 
 The LLM itself can only write text. To use a tool, it writes text in a fixed format that it was trained to use for tool calls. The exact format differs between LLMs; with many Qwen models, a request to list your Slurm jobs looks something like this:
 

@@ -30,10 +30,9 @@ However, this does not mean it is fine to send absolutely any data: Aitta does n
 
 ## Resources and limitations
 
-Aitta has two dedicated LUMI-G nodes (reserved specifically for Aitta, so it doesn't queue for them), shared by everyone who uses it. However, when demand is high and the dedicated nodes fill up, Aitta will automatically book additional GPU nodes from the rest of the LUMI cluster through Slurm%, like any other job.
+Aitta has two dedicated LUMI-G nodes (reserved specifically for Aitta, so it doesn't queue for them), shared by everyone who uses it. However, when demand is high and the dedicated nodes fill up, Aitta will automatically book additional GPU nodes from the rest of the LUMI cluster through Slurm%, like any other job, which can mean waiting in the queue.
 
 - **Starting an LLM takes time.** If you request an LLM that is not currently running, it takes a few minutes for the LLM weights to be loaded into VRAM (GPU memory). During this time, your agent may seem stuck or time out.
-- **Queueing for extra nodes.** Booking additional GPU nodes from the rest of the LUMI cluster may involve some additional queueing for resources.
 - **No guarantees.** Aitta cannot guarantee that a given LLM is available at a given time, so it suits research and development, not a service that other people depend on.
 
 You can check which LLMs are currently running by looking at the [Aitta web frontend](https://aitta.csc.fi) or by running this command in your terminal (replace `<YOUR_TOKEN>` with your actual API token). LLMs marked `"status": "running"` are ready to answer straight away, while `"requested"` or `"starting"` means the LLM is still waiting for GPUs or loading:
