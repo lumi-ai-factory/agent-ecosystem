@@ -13,7 +13,7 @@ But what is this MCP? MCP, the Model Context Protocol, is a shared standard for 
 
 ## What it can do
 
-The server gives your agent two tools:
+The LUMI MCP server gives your agent two tools:
 
 | Tool | What it does | Helps with questions like |
 |:-----|:-------------|:--------------------------|
@@ -22,7 +22,7 @@ The server gives your agent two tools:
 
 ![OpenCode, asked "how's LUMI doing?", calls lumi-aif_get_service_status and sums up the result: all compute partitions and login nodes are up, and only the LUMI-K web console is in maintenance](assets/opencode-query-MCP.png)
 
-Your agent decides when to use them. If it answers a LUMI question without checking, ask it to, for example "search the LUMI documentation for how to set up a PyTorch environment".
+Your agent decides when to use these tools and how to incorporate their output into the response to you.
 
 ## See what your agent receives
 
@@ -31,8 +31,8 @@ You can look at exactly what the tools hand back to the agent.
 `get_service_status` passes on the LUMI status API unchanged, so you can open the same data in your browser:
 
 - [Current status](https://status.lumi.csc.fi/api/status), including node% availability and response times
-- [Planned maintenance](https://status.lumi.csc.fi/api/maintenance)
-- [Incidents](https://status.lumi.csc.fi/api/incidents)
+- [Planned maintenance](https://status.lumi.csc.fi/api/maintenance) (empty if there is none)
+- [Incidents](https://status.lumi.csc.fi/api/incidents) (empty if there are none)
 
 The same information in a human-readable form is on the [LUMI status page](https://status.lumi.csc.fi).
 
@@ -91,11 +91,11 @@ Q: What do you need to use the LUMI MCP server?
 
 ---
 
-Q: Your agent answers a LUMI question without checking the documentation. What can you do?
-- [ ] Nothing, the agent decides on its own
-- [x] Ask it to search the LUMI documentation
-- [ ] Reconnect the MCP server
-> The agent decides when to use its tools, but you can always ask it to use one.
+Q: Who decides when the LUMI MCP server's tools are used?
+- [ ] You, by turning them on for each question
+- [ ] The MCP server
+- [x] Your agent
+> Your agent decides when to use the tools and how to incorporate their output into its response to you.
 ```
 
 <details>

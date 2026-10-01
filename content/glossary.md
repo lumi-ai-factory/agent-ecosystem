@@ -35,9 +35,9 @@ nav_order: 99
 | Term | Definition |
 |:-----|:-----------|
 | **Container** | A packaged software environment that bundles a program with everything it needs to run. On LUMI it also limits which of your files the program inside can see. |
-| **Login node** | The shared machine you land on when you connect to LUMI. It is meant for light work such as editing files and submitting jobs, not heavy computation. |
-| **Compute node** | One of the many LUMI machines where the heavy work runs. You get to use them by submitting a job through Slurm. |
-| **Working directory** | The folder your terminal is currently in. A program you start there looks for files in it by default. |
+| **Login node** | A LUMI machine you land on when you connect, where you edit files and submit jobs. |
+| **Compute node** | A LUMI machine where your submitted Slurm jobs do the heavy computation. |
+| **Working directory** | The folder your terminal is currently in. |
 
 ## MCP server
 

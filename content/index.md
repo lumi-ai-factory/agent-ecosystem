@@ -10,7 +10,7 @@ An AI agent can take on everyday coding work for you, such as writing a job scri
 
 An agent has two parts: an LLM% that decides what to do, and a program called the harness that carries it out, reading files, editing code and running commands, in your terminal or your code editor. You may hear people say "agent" when they mean just the harness, but on this site we keep the two apart: the agent is the whole package including the LLM, and the harness is the program itself.
 
-The LUMI AI Factory lets your agent use open-weight LLMs running on LUMI's GPUs% and look things up in the LUMI documentation, whether the harness runs on LUMI or on your own computer. This site shows how the pieces fit together and points you to the right guide for each step.
+The harness is light enough to run on LUMI or on your own computer, but a capable LLM needs powerful GPUs%, so it usually runs elsewhere (such as Aitta). This site shows how the pieces fit together and points you to the right guide for each step.
 
 ```mermaid
 flowchart LR
