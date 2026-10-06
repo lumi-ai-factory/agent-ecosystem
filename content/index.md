@@ -21,11 +21,11 @@ flowchart LR
 
 ## The three pieces
 
-They work well together, but each one also works on its own, so you can pick only the ones you need.
+They work well together, but each one also works on its own, so you can pick only the ones you need. Below is a short look at each, and the [Aitta](/01_aitta), [OpenCode](/02_opencode) and [MCP server](/03_mcp_server) chapters cover them in full.
 
 ### Aitta: the models
 
-Aitta is an inference platform%, like the ones OpenAI and Anthropic run, except that its models are open-weight LLMs running on LUMI's GPU nodes%. You can chat with them in your browser or connect to them through an API%, and your prompts are processed on LUMI's own hardware instead of being sent to a commercial provider. The API is OpenAI-compatible, so most harnesses and tools built to work with OpenAI can use Aitta too.
+Aitta is an inference platform%, like the ones OpenAI and Anthropic run, except that its models are open-weight LLMs running on LUMI's GPU nodes%. You can chat with them in your browser or connect to them through an API%, and your prompts are processed on LUMI's own hardware instead of being sent to a commercial provider. The API follows the same format as OpenAI's, which many other providers also use, so most harnesses and tools can connect to Aitta.
 
 ### OpenCode: the harness
 
@@ -37,7 +37,7 @@ An LLM only knows what it learned during training, and that rarely includes up-t
 
 ## Where to start
 
-- **New to all of this?** Read the pages in order: [Aitta](/01_aitta), then [OpenCode](/02_opencode), then the [MCP server](/03_mcp_server). Each one starts by explaining the idea behind it in plain words, and hovering over an underlined term shows its definition from the [glossary](/glossary).
+- **New to all of this?** Read the chapters in order. Each one starts by explaining the idea behind it in plain words, and hovering over an underlined term shows its definition from the [glossary](/glossary).
 - **Just want it running?** Get an API token from [Aitta](/01_aitta), then:
   - **On LUMI**, [start the OpenCode container](/02_opencode#opencode-on-lumi). It is already connected to Aitta and the MCP server, so you only add your API token and pick an LLM.
   - **On your own machine**, install OpenCode and download the ready-made [`opencode.json`](/02_opencode#opencode-on-your-own-machine), which connects Aitta and the MCP server.

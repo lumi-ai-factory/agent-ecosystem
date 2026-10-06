@@ -88,7 +88,7 @@ OpenCode saves the API token in your home directory, which only you can see, so 
 Compared with a plain install of OpenCode, the container:
 
 - **Asks before every action.** Its default configuration asks your permission before using any tool, except the LUMI MCP server's tools, which it uses without asking. When it asks, you can allow that action once or for the rest of the session. Choose "Allow once" unless you are sure you want the agent to do that kind of action freely, because the agent can also reach the folder where OpenCode keeps your API token.
-- **Knows a little about LUMI.** It gives the agent [a short set of instructions](https://github.com/lumi-ai-factory/laifs-agent-env/blob/main/config/AGENTS.md) about working on LUMI, such as what login nodes are for and how to go easy on LUMI's shared file system.
+- **Knows about LUMI.** Through the LUMI MCP server, the agent can search the LUMI documentation and check LUMI's current status. The container also gives it [a short set of instructions](https://github.com/lumi-ai-factory/laifs-agent-env/blob/main/config/AGENTS.md) about working on LUMI, such as what login nodes are for and how to go easy on LUMI's shared file system.
 - **Only sees your current directory.** The agent can reach the working directory% you start it in and everything below it, but not the rest of your home directory or your other project directories.
 - **Cannot use Slurm.** Slurm commands are not available inside the container, so the agent cannot submit or monitor jobs. It can still write a job script for you to check and submit yourself. A FirecREST API for LUMI is in development, which will let a harness run Slurm commands using an access token.
 
