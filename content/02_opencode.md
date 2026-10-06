@@ -58,8 +58,8 @@ An agent acts on your behalf: every command it runs is executed under your own u
 > [!warning] Using agents on LUMI
 > - **Stay in charge.** Monitor your agent actively and avoid running more than one.
 > - **Save often.** If a login node becomes unstable, agent processes may be stopped without notice. Save your work frequently and do not rely on long, unsupervised sessions.
-> - **Protect your work.** If their permissions allow it, agents can change, overwrite or delete files without asking, and LUMI's file systems are not backed up. Use version control or keep backups. Instead of letting the agent run Git commands, ask it which commands to run and run them yourself.
-> - **Keep it contained.** Run the harness in a container to limit which files the agent can reach, and never run it with elevated privileges (for example with `sudo` or as an administrator on your own).
+> - **Protect your work.** If their permissions allow it, agents can change, overwrite or delete files without asking, and LUMI's file systems are not backed up. Use version control or keep backups.
+> - **Keep it contained.** Run the harness in a container to limit which files the agent can reach, and never run it with elevated privileges.
 > - **Mind the shared system.** Agents may submit jobs, spawn runaway loops or query Slurm over and over, which affects everyone on LUMI. Check any job settings the agent suggests against the LUMI documentation. Disruptive processes may be terminated.
 > - **No sensitive data.** Never process sensitive or confidential data with an agent. Use synthetic data instead.
 > - **Guard your credentials.** Never give access to your password, SSH key or any other credential to an agent running on a third-party system, such as an online chatbot or a cloud-based IDE.
@@ -198,7 +198,7 @@ With the `opencode.json` above, the agent can read the files in the directory yo
 | Planning its work, asking you questions and handing parts of a task to helper agents | Fetching web pages and searching the web |
 | | Touching files outside the directory you started it in |
 
-Reading and searching cannot change anything, so asking every time would mostly just slow you down. Commands can do anything your account can, file changes can destroy work, and web pages can contain hidden instructions that take over the agent (prompt injection), so these wait for your approval. OpenCode also asks if the agent repeats the same action three times in a row.
+Reading and searching cannot change anything, so asking every time would mostly just slow you down. Commands can do anything your account can, file changes can destroy work, and web pages can contain hidden instructions that take over the agent (prompt injection). OpenCode also asks if the agent repeats the same action three times in a row.
 
 Everything the agent reads is sent to the LLM together with your prompt. With Aitta it stays on LUMI's hardware, but with any other provider it goes to that company. So keep API keys and passwords out of the files the agent can read. OpenCode helps by blocking `.env` files, a common place to keep them.
 
