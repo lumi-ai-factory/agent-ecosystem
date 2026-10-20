@@ -6,11 +6,11 @@ description: "How to use AI agents on LUMI: the Aitta inference service, the Ope
 
 # LUMI Agent Ecosystem
 
-An AI agent can take on everyday coding work for you, such as writing a job script, tracking down a bug or explaining an error message. Unlike a chatbot where you copy code back and forth, an agent works with your files and terminal directly.
+An AI agent does everyday coding tasks for you, like writing a job script, finding a bug, or explaining an error. Instead of copying code back and forth from a chatbot, an agent works with your files and terminal directly.
 
-An agent has two parts: an LLM% that decides what to do, and a program called the harness that carries it out, reading files, editing code and running commands, in your terminal or your code editor. You may hear people say "agent" when they mean just the harness, but on this site we keep the two apart: the agent is the whole package including the LLM, and the harness is the program itself.
+An agent consists of two parts: an LLM% to decide what to do, and a program called the harness to carry it out by reading files, editing code, and running commands in your terminal or code editor. Some use "agent" to mean just the harness. On this site, the agent is the complete package (LLM plus harness), and the harness is just the program.
 
-The harness is light enough to run on LUMI or on your own computer, but a capable LLM needs powerful GPUs%, so it usually runs elsewhere (such as Aitta). This site shows how the pieces fit together and points you to the right guide for each step.
+The harness is lightweight and runs on LUMI or your computer. A capable LLM needs powerful GPUs%, so it usually runs elsewhere, like Aitta. This site explains how these pieces connect and links to the relevant guides.
 
 ```mermaid
 flowchart LR
@@ -21,24 +21,24 @@ flowchart LR
 
 ## The three pieces
 
-They work well together, but each one also works on its own, so you can pick only the ones you need. Below is a short look at each, and the [Aitta](/01_aitta), [OpenCode](/02_opencode) and [MCP server](/03_mcp_server) chapters cover them in full.
+They work well together, but you can also use them on their own. Below is a quick overview. The [Aitta](/01_aitta), [OpenCode](/02_opencode), and [MCP server](/03_mcp_server) chapters provide full details.
 
 ### Aitta: the models
 
-Aitta is an inference platform%, like the ones OpenAI and Anthropic run, except that its models are open-weight LLMs running on LUMI's GPU nodes%. You can chat with them in your browser or connect to them through an API%, and your prompts are processed on LUMI's own hardware instead of being sent to a commercial provider. The API follows the same format as OpenAI's, which many other providers also use, so most harnesses and tools can connect to Aitta.
+Aitta is an inference platform%, similar to OpenAI or Anthropic, but it runs open-weight LLMs on LUMI's GPU nodes%. You chat with them in a browser or connect via an API%. Your prompts stay on LUMI's hardware. The API uses the OpenAI format, meaning most harnesses can connect to it.
 
 ### OpenCode: the harness
 
-OpenCode is a harness that works in your terminal or code editor, much like Anthropic's Claude Code or OpenAI's Codex. Unlike those, it is not tied to any AI company: it is open source% and works with LLMs from almost any provider, including Aitta. It uses the LLM you choose to plan, write and edit code, and to run commands if you allow it. On LUMI it comes ready to use in a container, and you can also install it on your own machine.
+OpenCode is a harness running in your terminal or code editor, similar to Claude Code or Codex. It is open source% and not tied to any AI company. You can use it with almost any LLM provider, including Aitta. It runs as a container on LUMI, or you can install it on your computer.
 
 ### The MCP server: the LUMI know-how
 
-An LLM only knows what it learned during training, and that rarely includes up-to-date details about LUMI. The LUMI AI Factory MCP% server lets your agent search the LUMI documentation and check whether anything on LUMI is down or under maintenance, so its answers are based on current information rather than guesswork. It works with Claude Code, Codex and most other harnesses too, not only OpenCode.
+An LLM only knows its training data, which rarely includes current LUMI details. The LUMI AI Factory MCP% server lets your agent search LUMI's documentation and check service status. This grounds its answers in current facts rather than guesses. It works with most harnesses, not just OpenCode.
 
 ## Where to start
 
-- **New to all of this?** Read the chapters in order. Each one starts by explaining the idea behind it in plain words, and hovering over an underlined term shows its definition from the [glossary](/glossary).
+- **New to this?** Read the chapters in order. Each starts with a simple explanation. Hover over an underlined term to see its [glossary](/glossary) definition.
 - **Just want it running?** Get an API token from [Aitta](/01_aitta), then:
-  - **On LUMI**, [start the OpenCode container](/02_opencode#opencode-on-lumi). It is already connected to Aitta and the MCP server, so you only add your API token and pick an LLM.
-  - **On your own machine**, install OpenCode and download the ready-made [`opencode.json`](/02_opencode#opencode-on-your-own-machine), which connects Aitta and the MCP server.
-  - **With another harness**, give it Aitta's base address and your API token (see [Getting started](/01_aitta#getting-started)), then add the [MCP server](/03_mcp_server).
+  - **On LUMI**, [start the OpenCode container](/02_opencode#opencode-on-lumi). It is already connected to Aitta and the MCP server. Just add your API token and select an LLM.
+  - **On your own machine**, install OpenCode and download our [`opencode.json`](/02_opencode#opencode-on-your-own-machine) to connect Aitta and the MCP server.
+  - **With another harness**, provide Aitta's base address and your API token (see [Getting started](/01_aitta#getting-started)), then connect the [MCP server](/03_mcp_server).

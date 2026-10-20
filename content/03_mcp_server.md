@@ -5,38 +5,38 @@ nav_order: 4
 
 # The LUMI MCP server
 
-An LLM% only knows what it learned during training, and that rarely includes up-to-date details about LUMI. Ask a coding agent% how to use PyTorch on LUMI and it may confidently suggest installing it with `pip install torch`, something that works on a laptop but gives you a PyTorch that cannot use LUMI's AMD GPUs% and bloats the system.
+An LLM% only knows its training data, which rarely covers current LUMI details. If you ask a coding agent% to install PyTorch on LUMI, it might suggest `pip install torch`. That works on a laptop but installs a version that cannot use LUMI's AMD GPUs% and bloats your environment.
 
-The LUMI AI Factory runs a public MCP% server that fills this gap. It lets your agent look things up in the LUMI documentation and check LUMI's current status, so it can answer questions about LUMI more accurately and write code suited to the system. It works with any harness% or app that supports MCP, such as OpenCode, Claude Code, Codex or VS Code, whichever LLM it uses. You do not need an account or an API token% to use it.
+The LUMI AI Factory runs a public MCP% server to solve this. It gives your agent tools to search the LUMI documentation and check system status. The agent can then answer LUMI questions accurately and write better code. It works with any MCP-compatible harness%, like OpenCode or Claude Code. You do not need an account or an API token%.
 
-But what is this MCP? MCP, the Model Context Protocol, is a shared standard for adding tools to an agent. An MCP server describes the tools it offers, the harness passes those descriptions on to the LLM, and from then on the LLM can call them just like the harness's built-in tools (explained in the [previous chapter](/02_opencode#how-an-agent-works)). Every MCP-capable harness speaks the same protocol, so one server works with all of them.
+What is MCP? The Model Context Protocol is a standard way to add tools to an agent. The server describes its tools to the harness, which passes them to the LLM. The LLM can then use them like built-in tools.
 
 ## What it can do
 
-The LUMI MCP server gives your agent two tools:
+The LUMI MCP server provides two tools:
 
 | Tool | What it does | Helps with questions like |
 |:-----|:-------------|:--------------------------|
-| `retrieve_docs` | Searches a regularly updated knowledge base of the [LUMI documentation](https://docs.lumi-supercomputer.eu/) and the [LUMI AI Guide](https://github.com/Lumi-supercomputer/LUMI-AI-Guide), and returns the most relevant passages with links to their sources | "How do I run PyTorch on LUMI?" |
-| `get_service_status` | Reports LUMI's current status, planned maintenance and ongoing incidents | "Why is my job not starting? Is something down?" |
+| `retrieve_docs` | Searches the [LUMI documentation](https://docs.lumi-supercomputer.eu/) and [LUMI AI Guide](https://github.com/Lumi-supercomputer/LUMI-AI-Guide), returning relevant passages and source links. | "How do I run PyTorch on LUMI?" |
+| `get_service_status` | Reports LUMI's status, planned maintenance, and active incidents. | "Why is my job not starting?" |
 
 ![OpenCode, asked "how's LUMI doing?", calls lumi-aif_get_service_status and sums up the result: all compute partitions and login nodes are up, and only the LUMI-K web console is in maintenance](assets/opencode-query-MCP.png)
 
-Your agent decides when to use these tools and how to incorporate their output into the response to you.
+Your agent decides when to use these tools and how to present the information.
 
 ## See what your agent receives
 
-You can look at exactly what the tools hand back to the agent.
+You can inspect the exact data the server sends back.
 
-`get_service_status` passes on the LUMI status API unchanged, so you can open the same data in your browser:
+The `get_service_status` tool passes data straight from the LUMI status API, so you can view it in your browser:
 
-- [Current status](https://status.lumi.csc.fi/api/status), including node% availability and response times
-- [Planned maintenance](https://status.lumi.csc.fi/api/maintenance) (empty if there is none)
-- [Incidents](https://status.lumi.csc.fi/api/incidents) (empty if there are none)
+- [Current status](https://status.lumi.csc.fi/api/status), including node% availability
+- [Planned maintenance](https://status.lumi.csc.fi/api/maintenance)
+- [Incidents](https://status.lumi.csc.fi/api/incidents)
 
-The same information in a human-readable form is on the [LUMI status page](https://status.lumi.csc.fi).
+A human-readable version is on the [LUMI status page](https://status.lumi.csc.fi).
 
-`retrieve_docs` cannot be opened in a browser, but you can call it from your terminal. Change the text after `"query"` to your own search, and `"k"` to the number of passages you want back:
+You cannot open `retrieve_docs` in a browser, but you can call it from your terminal. Change `"query"` to your search and `"k"` to the number of results:
 
 ```bash
 curl -s https://lumi-aif-agents.2.rahtiapp.fi/mcp \
@@ -45,38 +45,38 @@ curl -s https://lumi-aif-agents.2.rahtiapp.fi/mcp \
   -d '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"retrieve_docs","arguments":{"query":"agent infrastructure","k":1}}}'
 ```
 
-Each passage comes back with a link to its source and a score showing how closely it matches your query.
+Each result includes a link to the source and a score indicating how well it matched.
 
 ## Add it to your harness
 
 ### OpenCode
 
-On LUMI, the OpenCode container is already connected to the MCP server, so there is nothing to do. On your own machine, the `opencode.json` from the [previous chapter](/02_opencode#opencode-on-your-own-machine) already includes it.
+On LUMI, the OpenCode container connects to the server automatically. On your machine, our `opencode.json` from the [previous chapter](/02_opencode#opencode-on-your-own-machine) already includes it.
 
 ### Claude Code
 
-Run this once to make the server available in all your projects:
+Run this command once to enable the server for all projects:
 
 ```bash
 claude mcp add --transport http --scope user lumi-aif https://lumi-aif-agents.2.rahtiapp.fi/mcp
 ```
 
-See the [Claude Code MCP documentation](https://code.claude.com/docs/en/mcp) for other options.
+Check the [Claude Code MCP docs](https://code.claude.com/docs/en/mcp) for more options.
 
 ### Codex
 
-Add these lines to `~/.codex/config.toml`:
+Add this to `~/.codex/config.toml`:
 
 ```toml title="~/.codex/config.toml"
 [mcp_servers.lumi-aif]
 url = "https://lumi-aif-agents.2.rahtiapp.fi/mcp"
 ```
 
-See the [Codex MCP documentation](https://learn.chatgpt.com/docs/extend/mcp?surface=cli) for other options.
+Check the [Codex MCP docs](https://learn.chatgpt.com/docs/extend/mcp?surface=cli) for more details.
 
 ### Other harnesses
 
-Most other harnesses and apps, such as VS Code, can connect to a remote MCP server too. Look in their documentation for how to add one, and give it the address `https://lumi-aif-agents.2.rahtiapp.fi/mcp`.
+Most harnesses, including VS Code, support remote MCP servers. Check their documentation and use the address `https://lumi-aif-agents.2.rahtiapp.fi/mcp`.
 
 ## Knowledge check
 
@@ -101,12 +101,12 @@ Q: Who decides when the LUMI MCP server's tools are used?
 <details>
 <summary>Optional: how the MCP server finds its answers</summary>
 
-**What it knows.** The server only knows what is in its knowledge base: the LUMI documentation and the LUMI AI Guide. It is only as current as the last time the knowledge base was updated, and short, specific queries work best. Queries are capped at 100 characters.
+**What it knows.** The server searches its knowledge base: the LUMI documentation and AI Guide. It is only as current as its last update. Short, specific queries work best, up to 100 characters.
 
-**How it searches.** `retrieve_docs` is a RAG% search. The documentation is split into small passages, and each passage is stored as an embedding%. Your agent's query is turned into an embedding too, so passages are matched by meaning rather than exact words. The closest passages come back with links to their sources: 4 by default, up to 10.
+**How it searches.** `retrieve_docs` uses RAG% search. The text is stored as an embedding%. The agent's query becomes an embedding, matching passages by meaning rather than exact words. It returns the top 4 matches by default.
 
-**Who writes the answer.** The server does not write the answer. Your agent's own LLM reads the passages and answers from them. That is why it can point you to the right page of the documentation, and also why a weak LLM can still misread good passages.
+**Who writes the answer.** The server does not write answers. The LLM reads the passages and forms a response. This allows it to link to documentation, but a weak LLM can still misinterpret correct passages.
 
-For the full picture of how RAG works, see the [RAG chapter of The Pragmatic Guide to LLMs](https://arbruiser.github.io/The-Pragmatic-Guide-to-LLMs/8-rag/).
+Read the [Pragmatic Guide to LLMs](https://arbruiser.github.io/The-Pragmatic-Guide-to-LLMs/8-rag/) for more on RAG.
 
 </details>
